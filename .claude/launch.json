@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "fatfish-preview",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "scripts\\preview_web.cmd"],
+      "port": 8081
+    }
+  ]
+}

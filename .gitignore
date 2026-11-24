@@ -1,0 +1,28 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Secrets and private data
+.env
+private/
+out/
+
+# Audio / voice samples (never commit voice data)
+*.wav
+*.mp3
+*.m4a
+*.flac
+*.silk
+*.amr
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# build/package output
+dist/

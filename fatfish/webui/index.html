@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>茉莉 · 私聊陪伴</title>
+<link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">🐟</span>
+      <div>
+        <strong id="brandName">茉莉</strong>
+        <small>私聊陪伴 · 管理台</small>
+      </div>
+    </div>
+    <nav id="nav">
+      <a href="#/chat" data-page="chat">聊天</a>
+      <a href="#/overview" data-page="overview">概览</a>
+      <a href="#/users" data-page="users">用户</a>
+      <a href="#/memory" data-page="memory">记忆</a>
+      <a href="#/settings" data-page="settings">模型与参数</a>
+      <a href="#/prompts" data-page="prompts">提示词</a>
+      <a href="#/voices" data-page="voices">语音工作室</a>
+    </nav>
+    <div class="sidebar-foot">
+      <span id="modelBadge" class="badge">连接中…</span>
+      <span class="hint">仅限本机访问</span>
+    </div>
+  </aside>
+
+  <main id="main">
+    <section id="page-chat" class="page">
+      <div class="chat-shell">
+        <header class="chat-head">
+          <div>
+            <h1>私聊</h1>
+            <p class="sub">WebChat 测试台 · 回复会同步转发到 QQ</p>
+          </div>
+          <div class="row">
+            <label class="user-picker">身份 <select id="chatUser"></select></label>
+            <span class="status-dot" id="chatStatus"><i></i>连接中</span>
+            <button class="btn ghost" id="stateBtn" type="button">查看状态</button>
+          </div>
+        </header>
+        <div id="chatMessages" class="messages"></div>
+        <form id="chatForm" class="composer">
+          <textarea id="chatInput" rows="1" placeholder="说点什么…（Enter 发送，Shift+Enter 换行）"></textarea>
+          <button class="btn primary" type="submit">发送</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="page-overview" class="page">
+      <header class="page-head">
+        <div>
+          <h1>概览</h1>
+          <p class="sub">服务、数据与最近日志</p>
+        </div>
+        <button class="btn" id="overviewRefresh" type="button">刷新</button>
+      </header>
+      <div id="overviewContent" class="stack"></div>
+    </section>
+
+    <section id="page-users" class="page">
+      <header class="page-head">
+        <div>
+          <h1>用户</h1>
+          <p class="sub">白名单私聊用户；pending 不会收到回复，批准后才开始聊天</p>
+        </div>
+        <button class="btn" id="usersRefresh" type="button">刷新</button>
+      </header>
+      <div id="usersContent" class="stack"></div>
+    </section>
+
+    <section id="page-memory" class="page">
+      <header class="page-head">
+        <div>
+          <h1>记忆</h1>
+          <p class="sub">按用户查看和编辑事实、标签、话题、待触发、关系状态与聊天记录</p>
+        </div>
+        <div class="row">
+          <label class="user-picker">用户 <select id="memoryUser"></select></label>
+          <button class="btn" id="memoryRefresh" type="button">刷新</button>
+        </div>
+      </header>
+      <div id="memoryContent" class="stack"></div>
+    </section>
+
+    <section id="page-settings" class="page">
+      <header class="page-head">
+        <div>
+          <h1>模型与参数</h1>
+          <p class="sub">保存后立即生效；标注「重启生效」的项需要重启 core</p>
+        </div>
+        <button class="btn primary" id="settingsSave" type="button">保存修改</button>
+      </header>
+      <div id="settingsContent" class="stack"></div>
+    </section>
+
+    <section id="page-prompts" class="page">
+      <header class="page-head">
+        <div>
+          <h1>提示词</h1>
+          <p class="sub">按用户独立配置角色、原则与话术；保存后下一轮对话立即生效，每次保留最近 5 个版本</p>
+        </div>
+        <div class="row wrap" style="align-items:center;gap:10px">
+          <label class="user-picker">用户 <select id="promptUser"></select></label>
+          <label class="user-picker">角色名 <input id="promptBotName" type="text" maxlength="32" placeholder="默认昵称"></label>
+          <button class="btn small" id="promptBotNameSave" type="button">保存角色名</button>
+          <button class="btn" id="promptPreview" type="button">预览 system prompt</button>
+        </div>
+      </header>
+      <div class="prompt-layout">
+        <aside id="promptList" class="card list-card"></aside>
+        <div class="card prompt-editor">
+          <div class="editor-head">
+            <div>
+              <h2 id="promptTitle">人设</h2>
+              <p class="hint" id="promptPlaceholders"></p>
+            </div>
+            <span class="badge" id="promptBadge">使用默认</span>
+          </div>
+          <textarea id="promptText" rows="18" spellcheck="false"></textarea>
+          <div class="row wrap">
+            <button class="btn primary" id="promptSave" type="button">保存</button>
+            <button class="btn" id="promptReset" type="button">恢复默认</button>
+            <button class="btn ghost" id="promptHistoryBtn" type="button">历史版本</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-voices" class="page">
+      <header class="page-head">
+        <div>
+          <h1>语音工作室</h1>
+          <p class="sub">每个用户独立音色档案，支持 references 克隆、上传音色、试听与归档</p>
+        </div>
+        <label class="user-picker">用户 <select id="voiceUser"></select></label>
+      </header>
+      <div id="voicesContent" class="stack"></div>
+    </section>
+  </main>
+</div>
+
+<div id="toast" class="toast"></div>
+<div id="modal" class="modal hidden">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" type="button">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+<script type="module" src="/static/app.js"></script>
+</body>
+</html>

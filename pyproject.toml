@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fatfish"
+version = "0.1.0"
+description = "Private one-to-one QQ companion (self-hosted)"
+requires-python = ">=3.12"
+dependencies = [
+    "openai>=1.40",
+    "python-dotenv>=1.0",
+    "aiosqlite>=0.20",
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+    "websockets>=12",
+    "python-multipart>=0.0.9",
+    "httpx>=0.27",
+    "pydantic>=2.8",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+include = ["fatfish*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
